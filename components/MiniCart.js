@@ -8,7 +8,8 @@ import { formatter } from "../utils/helpers";
 
 export default function MiniCart({ cart }) {
   const cancelButtonRef = useRef();
-  const { cartOpen, setCartOpen, checkoutUrl } = useContext(CartContext);
+  const { cartOpen, setCartOpen, checkoutUrl, removeCartItem } =
+    useContext(CartContext);
 
   let cartTotal = 0;
   cart.map((item) => {
@@ -106,6 +107,7 @@ export default function MiniCart({ cart }) {
 
                                   <div className="flex">
                                     <button
+                                      onClick={() => removeCartItem(product.id)}
                                       type="button"
                                       className="font-medium text-indigo-600 hover:text-indigo-500"
                                     >
