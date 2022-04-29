@@ -5,6 +5,7 @@ import { XIcon } from "@heroicons/react/outline";
 import Image from "next/image";
 import { CartContext } from "../context/shopContext";
 import { formatter } from "../utils/helpers";
+import Link from "next/link";
 
 export default function MiniCart({ cart }) {
   const cancelButtonRef = useRef();
@@ -71,54 +72,88 @@ export default function MiniCart({ cart }) {
 
                     <div className="mt-8">
                       <div className="flow-root">
-                        <ul
-                          role="list"
-                          className="-my-6 divide-y divide-gray-200"
-                        >
-                          {cart.map((product) => (
-                            <li key={product.id} className="flex py-6">
-                              <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                <Image
-                                  src={product.image}
-                                  alt={product.title}
-                                  layout="fill"
-                                  objectFit="cover"
-                                />
-                              </div>
+                        {cart.length > 0 ? (
+                          <ul
+                            role="list"
+                            className="-my-6 divide-y divide-gray-200"
+                          >
+                            {cart.map((product) => (
+                              <li key={product.id} className="flex py-6">
+                                <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                  <Image
+                                    src={product.image}
+                                    alt={product.title}
+                                    layout="fill"
+                                    objectFit="cover"
+                                  />
+                                </div>
 
-                              <div className="ml-4 flex flex-1 flex-col">
-                                <div>
-                                  <div className="flex justify-between text-base font-medium text-gray-900">
-                                    <h3>
-                                      <a href={product.href}>{product.title}</a>
-                                    </h3>
-                                    <p className="ml-4">
-                                      {formatter.format(product.variantPrice)}
+                                <div className="ml-4 flex flex-1 flex-col">
+                                  <div>
+                                    <div className="flex justify-between text-base font-medium text-gray-900">
+                                      <h3>
+                                        <Link
+                                          href={`/products/${product.handle}`}
+                                          passHref
+                                        >
+                                          <a onClick={() => setCartOpen(false)}>
+                                            {product.title}
+                                          </a>
+                                        </Link>
+                                      </h3>
+                                      <p className="ml-4">
+                                        {formatter.format(product.variantPrice)}
+                                      </p>
+                                    </div>
+                                    <p className="mt-1 text-sm text-gray-500">
+                                      {product.variantTitle}
                                     </p>
                                   </div>
-                                  <p className="mt-1 text-sm text-gray-500">
-                                    {product.variantTitle}
-                                  </p>
-                                </div>
-                                <div className="flex flex-1 items-end justify-between text-sm">
-                                  <p className="text-gray-500">
-                                    Quantité: {product.variantQuantity}
-                                  </p>
+                                  <div className="flex flex-1 items-end justify-between text-sm">
+                                    <p className="text-gray-500">
+                                      Quantité: {product.variantQuantity}
+                                    </p>
 
-                                  <div className="flex">
-                                    <button
-                                      onClick={() => removeCartItem(product.id)}
-                                      type="button"
-                                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                                    >
-                                      Retirer
-                                    </button>
+                                    <div className="flex">
+                                      <button
+                                        onClick={() =>
+                                          removeCartItem(product.id)
+                                        }
+                                        type="button"
+                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      >
+                                        Retirer
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div>
+                            <div className="lg:text-center">
+                              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                                Faites vos courses en un clic avec Shopinext
+                              </p>
+                              <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                                Lorem ipsum dolor sit amet consect adipisicing
+                                elit. Possimus magnam voluptatum cupiditate
+                                veritatis in accusamus quisquam.
+                              </p>
+                              <div className="mt-6">
+                                <Link href={`/`}>
+                                  <a
+                                    onClick={() => setCartOpen(false)}
+                                    className="flex items-center justify-center rounded-md border border-transparent bg-black hover:bg-gray-700 px-6 py-3 text-base font-medium text-white shadow-sm "
+                                  >
+                                    Je fais mes achats
+                                  </a>
+                                </Link>
                               </div>
-                            </li>
-                          ))}
-                        </ul>
+                            </div>{" "}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -145,7 +180,7 @@ export default function MiniCart({ cart }) {
                           <button
                             type="button"
                             className="font-medium text-gray-600 hover:text-gray-500"
-                            onClick={() => seCartOpen(false)}
+                            onClick={() => setCartOpen(false)}
                           >
                             Continuer mes achats
                             <span aria-hidden="true"> &rarr;</span>
