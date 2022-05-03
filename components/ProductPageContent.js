@@ -3,6 +3,7 @@ import ProductForm from "./ProductForm";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import RecommendedList from "./RecommendedList";
+import Reviews from "./Reviews";
 
 export default function ProductPageContent({ product }) {
   const images = [];
@@ -40,6 +41,7 @@ export default function ProductPageContent({ product }) {
       <p className="pt-16 space-y-8 md:space-x-4 lg:space-x-8 max-w-3xl w-11/12 mx-auto">
         {product.description}
       </p>
+      <Reviews />
       <RecommendedList
         current={product.id}
         products={product.collections.edges[0].node.products.edges}

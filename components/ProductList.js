@@ -1,5 +1,4 @@
-import ProductCard from "./ProductCard"
-
+import ProductCard from "./ProductCard";
 
 const ProductList = ({ products }) => {
   return (
@@ -9,15 +8,13 @@ const ProductList = ({ products }) => {
           Nos produits
         </h2>
         <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {
-            products.map(product => (
-              <ProductCard key={product.node.id} product={product} />
-            ))
-          }
+          {products.map((product) => (
+            <ProductCard key={product.node.id} product={product} />
+          ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductList
+export default ProductList;
